@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aura Estates Cyprus — Luxury Real Estate</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --charcoal: #1a1a1a;
+    --charcoal-mid: #242424;
+    --charcoal-soft: #2e2e2e;
+    --copper: #b87333;
+    --copper-light: #d4935a;
+    --copper-pale: #e8c49a;
+    --off-white: #f5f0eb;
+    --warm-white: #faf7f4;
+    --text-muted: #888;
+    --text-soft: #bbb;
+    --border: rgba(184,115,51,0.2);
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Jost', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--charcoal);
+    color: var(--off-white);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 48px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(26,26,26,0.98), rgba(26,26,26,0));
+    transition: background 0.4s;
+  }
+  nav.scrolled { background: rgba(26,26,26,0.97); border-bottom: 1px solid var(--border); }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--off-white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--copper); }
+  .nav-links { display: flex; gap: 36px; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--copper-light); }
+  .nav-lang { display: flex; gap: 10px; align-items: center; }
+  .lang-btn {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 6px;
+    transition: color 0.2s;
+    font-family: var(--font-body);
+  }
+  .lang-btn.active, .lang-btn:hover { color: var(--copper); }
+  .lang-sep { color: var(--border); font-size: 12px; }
+  .nav-cta {
+    padding: 10px 24px;
+    background: transparent;
+    border: 1px solid var(--copper);
+    color: var(--copper);
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--copper); color: var(--charcoal); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 48px 80px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(160deg, rgba(26,26,26,0) 30%, rgba(26,26,26,0.85) 100%),
+      linear-gradient(to bottom, rgba(26,26,26,0.3) 0%, rgba(26,26,26,0.5) 100%);
+    z-index: 1;
+  }
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    background:
+      url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1600&q=80') center/cover no-repeat;
+    z-index: 0;
+    transform: scale(1.05);
+    animation: heroZoom 12s ease-out forwards;
+  }
+  @keyframes heroZoom { to { transform: scale(1); } }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    animation: heroFadeUp 1.2s ease-out both;
+  }
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 24px;
+  }
+  .hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--copper); }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 7vw, 90px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+    color: var(--warm-white);
+  }
+  .hero-title em { font-style: italic; color: var(--copper-light); }
+  .hero-sub {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--text-soft);
+    margin-bottom: 48px;
+    line-height: 1.8;
+    max-width: 480px;
+  }
+
+  /* Search bar */
+  .hero-search {
+    display: flex;
+    background: rgba(26,26,26,0.9);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    max-width: 620px;
+  }
+  .search-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border);
+  }
+  .search-field:last-of-type { border-right: none; }
+  .search-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 4px;
+  }
+  .search-field select, .search-field input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--off-white);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    cursor: pointer;
+  }
+  .search-field select option { background: var(--charcoal); }
+  .search-btn {
+    padding: 0 28px;
+    background: var(--copper);
+    border: none;
+    color: var(--charcoal);
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;
+  }
+  .search-btn:hover { background: var(--copper-light); }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px; right: 48px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    animation: heroFadeUp 1.6s ease-out both;
+  }
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--copper), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+  /* Stats bar */
+  .stats-bar {
+    position: absolute;
+    top: 50%;
+    right: 48px;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    animation: heroFadeUp 1.4s ease-out both;
+  }
+  .stat-item { text-align: right; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--copper-light);
+    line-height: 1;
+  }
+  .stat-lbl { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 120px 48px; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 10px; font-weight: 400; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--copper); margin-bottom: 20px;
+  }
+  .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--copper); }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--warm-white);
+    margin-bottom: 16px;
+  }
+  .section-title em { font-style: italic; color: var(--copper-light); }
+  .section-sub {
+    font-size: 13px; font-weight: 300; line-height: 1.9;
+    color: var(--text-muted); max-width: 560px;
+  }
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+    margin: 0;
+  }
+
+  /* ── FEATURED PROPERTIES ── */
+  #properties { background: var(--charcoal); }
+  .props-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 60px;
+  }
+  .props-filter {
+    display: flex; gap: 4px;
+  }
+  .filter-btn {
+    padding: 8px 18px;
+    background: none;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    border-color: var(--copper);
+    color: var(--copper);
+  }
+  .props-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .prop-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 3/4;
+  }
+  .prop-card.large { grid-row: span 2; aspect-ratio: auto; }
+  .prop-card-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .prop-card:hover .prop-card-img { transform: scale(1.06); }
+  .prop-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,26,26,0.92) 0%, rgba(26,26,26,0) 55%);
+    transition: opacity 0.4s;
+  }
+  .prop-card-content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 28px;
+    transform: translateY(8px);
+    transition: transform 0.4s;
+  }
+  .prop-card:hover .prop-card-content { transform: translateY(0); }
+  .prop-type {
+    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--copper); margin-bottom: 8px;
+  }
+  .prop-name {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 400; color: var(--warm-white);
+    margin-bottom: 4px;
+  }
+  .prop-loc { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; margin-bottom: 16px; }
+  .prop-meta { display: flex; gap: 16px; }
+  .prop-meta span { font-size: 11px; color: var(--text-soft); }
+  .prop-price {
+    font-family: var(--font-display);
+    font-size: 24px; font-weight: 300;
+    color: var(--copper-light);
+    margin-top: 10px;
+  }
+  .prop-badge {
+    position: absolute;
+    top: 20px; left: 20px;
+    padding: 5px 12px;
+    background: var(--copper);
+    color: var(--charcoal);
+    font-size: 9px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .view-all-wrap { text-align: center; margin-top: 56px; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 14px 36px;
+    border: 1px solid var(--copper);
+    color: var(--copper);
+    font-family: var(--font-body);
+    font-size: 10px; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase;
+    text-decoration: none; cursor: pointer; background: none;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { background: var(--copper); color: var(--charcoal); }
+  .btn-outline::after { content: '→'; font-size: 14px; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--charcoal-mid); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+  .service-card {
+    padding: 52px 40px;
+    background: var(--charcoal-mid);
+    border: 1px solid transparent;
+    transition: all 0.35s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--copper), var(--copper-light));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .service-card:hover { background: var(--charcoal-soft); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon {
+    font-size: 32px;
+    margin-bottom: 28px;
+    display: block;
+  }
+  .service-num {
+    font-family: var(--font-display);
+    font-size: 72px; font-weight: 300;
+    color: rgba(184,115,51,0.08);
+    position: absolute;
+    top: 20px; right: 28px;
+    line-height: 1;
+  }
+  .service-name {
+    font-family: var(--font-display);
+    font-size: 28px; font-weight: 400;
+    color: var(--warm-white);
+    margin-bottom: 16px;
+  }
+  .service-desc {
+    font-size: 13px; font-weight: 300; line-height: 1.8;
+    color: var(--text-muted); margin-bottom: 32px;
+  }
+  .service-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .service-list li {
+    font-size: 12px; font-weight: 300; color: var(--text-soft);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .service-list li::before { content: ''; width: 16px; height: 1px; background: var(--copper); flex-shrink: 0; }
+  .service-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 32px;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--copper); cursor: pointer; text-decoration: none;
+    transition: gap 0.3s;
+  }
+  .service-link:hover { gap: 14px; }
+  .service-link::after { content: '→'; }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--charcoal);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+    min-height: 700px;
+  }
+  .about-image {
+    position: relative;
+    overflow: hidden;
+  }
+  .about-image img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .about-image-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(26,26,26,0) 60%, rgba(26,26,26,0.6) 100%);
+  }
+  .about-content {
+    padding: 100px 72px 100px 72px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .about-quote {
+    font-family: var(--font-display);
+    font-size: 36px; font-weight: 300; font-style: italic;
+    line-height: 1.4;
+    color: var(--off-white);
+    border-left: 2px solid var(--copper);
+    padding-left: 28px;
+    margin: 32px 0 40px;
+  }
+  .about-text {
+    font-size: 13px; font-weight: 300; line-height: 1.9;
+    color: var(--text-muted); margin-bottom: 16px;
+  }
+  .team-mini {
+    display: flex; gap: 16px; margin-top: 48px;
+  }
+  .team-card {
+    flex: 1; padding: 20px;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+  .team-card:hover { border-color: var(--copper); }
+  .team-name {
+    font-family: var(--font-display);
+    font-size: 16px; font-weight: 400;
+    color: var(--warm-white); margin-bottom: 4px;
+  }
+  .team-role { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper); }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--charcoal-mid); }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 64px;
+  }
+  .testi-card {
+    padding: 40px 32px;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .testi-card:hover { border-color: var(--copper); transform: translateY(-4px); }
+  .testi-stars { color: var(--copper); font-size: 14px; letter-spacing: 3px; margin-bottom: 24px; }
+  .testi-quote-mark {
+    font-family: var(--font-display);
+    font-size: 80px; font-weight: 300;
+    color: rgba(184,115,51,0.15);
+    line-height: 0.7;
+    margin-bottom: 8px;
+  }
+  .testi-text {
+    font-family: var(--font-display);
+    font-size: 17px; font-weight: 300; font-style: italic;
+    line-height: 1.7; color: var(--off-white); margin-bottom: 28px;
+  }
+  .testi-author { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper); }
+  .testi-origin { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--charcoal);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+  .contact-info { padding-top: 8px; }
+  .contact-detail {
+    display: flex; gap: 20px; align-items: flex-start;
+    margin-bottom: 28px; padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .contact-detail:last-of-type { border-bottom: none; }
+  .contact-detail-icon { font-size: 18px; margin-top: 2px; }
+  .contact-detail-label {
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--copper); margin-bottom: 6px;
+  }
+  .contact-detail-val { font-size: 14px; font-weight: 300; color: var(--off-white); }
+  .form-group { margin-bottom: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--copper); margin-bottom: 8px;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    background: var(--charcoal-mid);
+    border: 1px solid var(--border);
+    color: var(--off-white);
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 300;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.25s;
+    resize: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--copper); }
+  .form-group select option { background: var(--charcoal-mid); }
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--copper);
+    border: none;
+    color: var(--charcoal);
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--copper-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #111;
+    padding: 60px 48px 32px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 26px; font-weight: 400; letter-spacing: 0.04em;
+    color: var(--off-white); margin-bottom: 16px;
+  }
+  .footer-logo span { color: var(--copper); }
+  .footer-desc { font-size: 12px; font-weight: 300; line-height: 1.8; color: var(--text-muted); }
+  .footer-col-title {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--copper); margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    font-size: 12px; font-weight: 300;
+    color: var(--text-muted); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--copper-light); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 28px; border-top: 1px solid var(--border);
+    font-size: 11px; color: var(--text-muted); font-weight: 300;
+  }
+  .footer-bottom a { color: var(--copper); text-decoration: none; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── LANGUAGE PANEL ── */
+  .lang-content { display: none; }
+  .lang-content.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">Aura <span>Estates</span></a>
+  <div class="nav-links">
+    <a href="#properties">Properties</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <div class="nav-lang">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" onclick="setLang('gr')">ΕΛ</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" onclick="setLang('ru')">RU</button>
+    </div>
+    <a href="#contact" class="nav-cta">Book Consultation</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-image"></div>
+  <div class="hero-bg"></div>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">200+</div>
+      <div class="stat-lbl" id="stat1">Properties Sold</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">15+</div>
+      <div class="stat-lbl" id="stat2">Years in Cyprus</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">98%</div>
+      <div class="stat-lbl" id="stat3">Client Satisfaction</div>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tag" id="hero-tag">Cyprus Luxury Real Estate</div>
+    <h1 class="hero-title" id="hero-title">
+      Your Vision.<br><em>Our Expertise.</em><br>Cyprus.
+    </h1>
+    <p class="hero-sub" id="hero-sub">
+      Premium construction, expert property management, and exclusive sales across Cyprus's most coveted locations.
+    </p>
+    <div class="hero-search">
+      <div class="search-field">
+        <span class="search-label">Type</span>
+        <select>
+          <option>All Properties</option>
+          <option>Villa</option>
+          <option>Apartment</option>
+          <option>Land</option>
+          <option>Commercial</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <span class="search-label">Location</span>
+        <select>
+          <option>All Cyprus</option>
+          <option>Limassol</option>
+          <option>Paphos</option>
+          <option>Nicosia</option>
+          <option>Larnaca</option>
+          <option>Famagusta</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <span class="search-label">Budget</span>
+        <select>
+          <option>Any Price</option>
+          <option>Up to €300k</option>
+          <option>€300k – €600k</option>
+          <option>€600k – €1M</option>
+          <option>€1M+</option>
+        </select>
+      </div>
+      <button class="search-btn">Search</button>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURED PROPERTIES -->
+<section id="properties">
+  <div class="props-header reveal">
+    <div>
+      <div class="section-tag" id="props-tag">Featured Listings</div>
+      <h2 class="section-title" id="props-title">Exceptional <em>Properties</em></h2>
+    </div>
+    <div class="props-filter">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Villas</button>
+      <button class="filter-btn">Apartments</button>
+      <button class="filter-btn">Land</button>
+    </div>
+  </div>
+
+  <div class="props-grid reveal">
+    <!-- Card 1: Large -->
+    <div class="prop-card large">
+      <img class="prop-card-img" src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80" alt="Villa Limassol"/>
+      <div class="prop-card-overlay"></div>
+      <div class="prop-badge">Exclusive</div>
+      <div class="prop-card-content">
+        <div class="prop-type">Sea-Front Villa</div>
+        <div class="prop-name">Villa Helios</div>
+        <div class="prop-loc">📍 Limassol Marina</div>
+        <div class="prop-meta">
+          <span>5 beds</span>
+          <span>4 baths</span>
+          <span>420 m²</span>
+          <span>Pool</span>
+        </div>
+        <div class="prop-price">€2,850,000</div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="prop-card">
+      <img class="prop-card-img" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80" alt="Apartment Paphos"/>
+      <div class="prop-card-overlay"></div>
+      <div class="prop-card-content">
+        <div class="prop-type">Penthouse</div>
+        <div class="prop-name">Skyline Residences</div>
+        <div class="prop-loc">📍 Paphos Harbour</div>
+        <div class="prop-meta">
+          <span>3 beds</span>
+          <span>2 baths</span>
+          <span>220 m²</span>
+        </div>
+        <div class="prop-price">€980,000</div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="prop-card">
+      <img class="prop-card-img" src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80" alt="Villa Nicosia"/>
+      <div class="prop-card-overlay"></div>
+      <div class="prop-badge">New Build</div>
+      <div class="prop-card-content">
+        <div class="prop-type">Private Villa</div>
+        <div class="prop-name">Troodos Retreat</div>
+        <div class="prop-loc">📍 Nicosia Suburbs</div>
+        <div class="prop-meta">
+          <span>4 beds</span>
+          <span>3 baths</span>
+          <span>310 m²</span>
+        </div>
+        <div class="prop-price">€1,250,000</div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="prop-card">
+      <img class="prop-card-img" src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80" alt="Apartment Larnaca"/>
+      <div class="prop-card-overlay"></div>
+      <div class="prop-card-content">
+        <div class="prop-type">Luxury Apartment</div>
+        <div class="prop-name">Azure Tower</div>
+        <div class="prop-loc">📍 Larnaca Coast</div>
+        <div class="prop-meta">
+          <span>2 beds</span>
+          <span>2 baths</span>
+          <span>145 m²</span>
+        </div>
+        <div class="prop-price">€485,000</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view-all-wrap reveal">
+    <a href="#" class="btn-outline">View All Properties</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
+    <div class="section-tag" id="services-tag">What We Do</div>
+    <h2 class="section-title" id="services-title">Three Services,<br><em>One Vision</em></h2>
+    <p class="section-sub" style="margin:0 auto;" id="services-sub">
+      From breaking ground to handing over the keys — and everything in between — we are Cyprus's most complete real estate partner.
+    </p>
+  </div>
+
+  <div class="services-grid reveal">
+    <!-- Construction -->
+    <div class="service-card">
+      <span class="service-num">01</span>
+      <span class="service-icon">🏗️</span>
+      <div class="service-name" id="svc1-name">Construction</div>
+      <p class="service-desc" id="svc1-desc">We build exceptional residences and commercial spaces from the ground up, combining architectural excellence with uncompromising quality control.</p>
+      <ul class="service-list" id="svc1-list">
+        <li>Luxury villa construction</li>
+        <li>Apartment developments</li>
+        <li>Commercial buildings</li>
+        <li>Full project management</li>
+        <li>Renovations & extensions</li>
+      </ul>
+      <a href="#contact" class="service-link" id="svc1-link">Start a project</a>
+    </div>
+
+    <!-- Property Management -->
+    <div class="service-card">
+      <span class="service-num">02</span>
+      <span class="service-icon">🏛️</span>
+      <div class="service-name" id="svc2-name">Property Management</div>
+      <p class="service-desc" id="svc2-desc">We protect and grow your investment with full-spectrum property management — so you can enjoy returns without the hassle.</p>
+      <ul class="service-list" id="svc2-list">
+        <li>Tenant screening & onboarding</li>
+        <li>Rent collection & accounting</li>
+        <li>Maintenance coordination</li>
+        <li>Short-term rental management</li>
+        <li>Legal & compliance support</li>
+      </ul>
+      <a href="#contact" class="service-link" id="svc2-link">Manage my property</a>
+    </div>
+
+    <!-- Sales & Purchase -->
+    <div class="service-card">
+      <span class="service-num">03</span>
+      <span class="service-icon">🔑</span>
+      <div class="service-name" id="svc3-name">Sales & Purchase</div>
+      <p class="service-desc" id="svc3-desc">Whether buying or selling, our licensed agents deliver exclusive access, honest guidance, and seamless transactions in Cyprus's finest locations.</p>
+      <ul class="service-list" id="svc3-list">
+        <li>Exclusive off-market listings</li>
+        <li>Buyer representation</li>
+        <li>Investment advisory</li>
+        <li>Title deed & legal support</li>
+        <li>International buyer services</li>
+      </ul>
+      <a href="#contact" class="service-link" id="svc3-link">Find a property</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image">
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80" alt="Cyprus Property"/>
+    <div class="about-image-overlay"></div>
+  </div>
+  <div class="about-content reveal">
+    <div class="section-tag" id="about-tag">Our Story</div>
+    <h2 class="section-title" id="about-title">Built on <em>Trust,</em><br>Rooted in Cyprus</h2>
+    <blockquote class="about-quote" id="about-quote">
+      "We don't just sell properties — we find the place where your life's next chapter begins."
+    </blockquote>
+    <p class="about-text" id="about-text1">
+      Aura Estates was founded with a singular mission: to bring genuine expertise, transparency, and elegance to Cyprus's real estate market. With over 15 years of experience, our multilingual team serves clients from across Europe, the Middle East, and beyond.
+    </p>
+    <p class="about-text" id="about-text2">
+      From a simple apartment in Larnaca to a sprawling seafront villa in Limassol — every client receives the same unwavering commitment to excellence.
+    </p>
+    <div class="team-mini">
+      <div class="team-card">
+        <div class="team-name">Alexandra K.</div>
+        <div class="team-role">Founder & CEO</div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">Dmitri V.</div>
+        <div class="team-role">Head of Sales</div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">Nikos P.</div>
+        <div class="team-role">Construction Director</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="reveal" style="text-align:center;max-width:560px;margin:0 auto 0;">
+    <div class="section-tag" id="testi-tag">Client Reviews</div>
+    <h2 class="section-title" id="testi-title">Words from Our <em>Clients</em></h2>
+  </div>
+
+  <div class="testi-grid reveal">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote-mark">"</div>
+      <p class="testi-text">Aura Estates found us our dream villa in Paphos within three weeks. The process was transparent, professional and genuinely enjoyable.</p>
+      <div class="testi-author">James & Sarah M.</div>
+      <div class="testi-origin">London, United Kingdom</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote-mark">"</div>
+      <p class="testi-text">Превосходный сервис. Команда помогла нам с покупкой апартаментов в Лимассоле — всё было организовано безупречно.</p>
+      <div class="testi-author">Михаил &amp; Ирина С.</div>
+      <div class="testi-origin">Москва, Россия</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote-mark">"</div>
+      <p class="testi-text">They managed our Limassol property for two years. Zero stress, maximum returns. I recommend Aura Estates to every investor I know.</p>
+      <div class="testi-author">Andreas P.</div>
+      <div class="testi-origin">Nicosia, Cyprus</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-info reveal">
+    <div class="section-tag" id="contact-tag">Get in Touch</div>
+    <h2 class="section-title" id="contact-title">Let's Find Your <em>Perfect</em> Property</h2>
+    <p class="section-sub" id="contact-sub" style="margin-bottom:48px;">
+      Our multilingual team is ready to assist you in English, Greek, and Russian. Reach out and we'll respond within 24 hours.
+    </p>
+    <div class="contact-detail">
+      <span class="contact-detail-icon">📞</span>
+      <div>
+        <div class="contact-detail-label">Phone</div>
+        <div class="contact-detail-val">+357 25 000 000</div>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <span class="contact-detail-icon">✉️</span>
+      <div>
+        <div class="contact-detail-label">Email</div>
+        <div class="contact-detail-val">info@auraestates.cy</div>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <span class="contact-detail-icon">📍</span>
+      <div>
+        <div class="contact-detail-label">Office</div>
+        <div class="contact-detail-val">Limassol Marina, Cyprus</div>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <span class="contact-detail-icon">🕐</span>
+      <div>
+        <div class="contact-detail-label">Hours</div>
+        <div class="contact-detail-val">Mon–Fri 9:00–18:00 · Sat 10:00–14:00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" placeholder="Alexandra"/>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" placeholder="Smith"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" placeholder="your@email.com"/>
+    </div>
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="tel" placeholder="+357 ..."/>
+    </div>
+    <div class="form-group">
+      <label>I'm Interested In</label>
+      <select>
+        <option>Buying a Property</option>
+        <option>Selling a Property</option>
+        <option>Property Management</option>
+        <option>Construction Project</option>
+        <option>Investment Advisory</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <textarea rows="4" placeholder="Tell us about your requirements..."></textarea>
+    </div>
+    <button class="form-submit">Send Enquiry →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Aura <span>Estates</span></div>
+      <p class="footer-desc">Cyprus's premier full-service real estate company. Construction, property management and exclusive sales across the island's finest locations.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Properties</div>
+      <ul class="footer-links">
+        <li><a href="#">Villas</a></li>
+        <li><a href="#">Apartments</a></li>
+        <li><a href="#">Commercial</a></li>
+        <li><a href="#">Land</a></li>
+        <li><a href="#">New Developments</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">Construction</a></li>
+        <li><a href="#">Property Management</a></li>
+        <li><a href="#">Buy & Sell</a></li>
+        <li><a href="#">Investment Advisory</a></li>
+        <li><a href="#">Short-term Rentals</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Our Team</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Aura Estates Cyprus Ltd. All rights reserved. Licensed RE Agent #XXXX</span>
+    <span><a href="#">Privacy Policy</a> · <a href="#">Terms</a></span>
+  </div>
+</footer>
+
+<script>
+// ── NAVBAR SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── FILTER BUTTONS ──
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── LANGUAGE SWITCHER ──
+const content = {
+  en: {
+    'hero-tag': 'Cyprus Luxury Real Estate',
+    'hero-title': 'Your Vision.<br><em>Our Expertise.</em><br>Cyprus.',
+    'hero-sub': 'Premium construction, expert property management, and exclusive sales across Cyprus\'s most coveted locations.',
+    'stat1': 'Properties Sold', 'stat2': 'Years in Cyprus', 'stat3': 'Client Satisfaction',
+    'props-tag': 'Featured Listings', 'props-title': 'Exceptional <em>Properties</em>',
+    'services-tag': 'What We Do', 'services-title': 'Three Services,<br><em>One Vision</em>',
+    'services-sub': 'From breaking ground to handing over the keys — and everything in between — we are Cyprus\'s most complete real estate partner.',
+    'svc1-name': 'Construction', 'svc1-desc': 'We build exceptional residences and commercial spaces from the ground up, combining architectural excellence with uncompromising quality control.',
+    'svc1-list': ['Luxury villa construction','Apartment developments','Commercial buildings','Full project management','Renovations & extensions'],
+    'svc1-link': 'Start a project',
+    'svc2-name': 'Property Management', 'svc2-desc': 'We protect and grow your investment with full-spectrum property management — so you can enjoy returns without the hassle.',
+    'svc2-list': ['Tenant screening & onboarding','Rent collection & accounting','Maintenance coordination','Short-term rental management','Legal & compliance support'],
+    'svc2-link': 'Manage my property',
+    'svc3-name': 'Sales & Purchase', 'svc3-desc': 'Whether buying or selling, our licensed agents deliver exclusive access, honest guidance, and seamless transactions.',
+    'svc3-list': ['Exclusive off-market listings','Buyer representation','Investment advisory','Title deed & legal support','International buyer services'],
+    'svc3-link': 'Find a property',
+    'about-tag': 'Our Story', 'about-title': 'Built on <em>Trust,</em><br>Rooted in Cyprus',
+    'about-quote': '"We don\'t just sell properties — we find the place where your life\'s next chapter begins."',
+    'about-text1': 'Aura Estates was founded with a singular mission: to bring genuine expertise, transparency, and elegance to Cyprus\'s real estate market. With over 15 years of experience, our multilingual team serves clients from across Europe, the Middle East, and beyond.',
+    'about-text2': 'From a simple apartment in Larnaca to a sprawling seafront villa in Limassol — every client receives the same unwavering commitment to excellence.',
+    'testi-tag': 'Client Reviews', 'testi-title': 'Words from Our <em>Clients</em>',
+    'contact-tag': 'Get in Touch', 'contact-title': 'Let\'s Find Your <em>Perfect</em> Property',
+    'contact-sub': 'Our multilingual team is ready to assist you in English, Greek, and Russian. Reach out and we\'ll respond within 24 hours.',
+  },
+  gr: {
+    'hero-tag': 'Πολυτελής Ακίνητη Περιουσία Κύπρου',
+    'hero-title': 'Το Όραμά Σας.<br><em>Η Εμπειρία Μας.</em><br>Κύπρος.',
+    'hero-sub': 'Κατασκευές υψηλής ποιότητας, διαχείριση ακινήτων και αποκλειστικές πωλήσεις στις πιο περιζήτητες τοποθεσίες της Κύπρου.',
+    'stat1': 'Πωληθέντα Ακίνητα', 'stat2': 'Χρόνια στην Κύπρο', 'stat3': 'Ικανοποίηση Πελατών',
+    'props-tag': 'Επιλεγμένα Ακίνητα', 'props-title': 'Εξαιρετικά <em>Ακίνητα</em>',
+    'services-tag': 'Τι Κάνουμε', 'services-title': 'Τρεις Υπηρεσίες,<br><em>Ένα Όραμα</em>',
+    'services-sub': 'Από τη θεμελίωση μέχρι την παράδοση — είμαστε ο πληρέστερος συνεργάτης ακινήτων στην Κύπρο.',
+    'svc1-name': 'Κατασκευή', 'svc1-desc': 'Κατασκευάζουμε εξαιρετικές κατοικίες και εμπορικούς χώρους, συνδυάζοντας αρχιτεκτονική αριστεία με ποιοτικό έλεγχο.',
+    'svc1-list': ['Κατασκευή πολυτελών βιλών','Ανάπτυξη διαμερισμάτων','Εμπορικά κτίρια','Πλήρης διαχείριση έργου','Ανακαινίσεις & επεκτάσεις'],
+    'svc1-link': 'Ξεκινήστε ένα έργο',
+    'svc2-name': 'Διαχείριση Ακινήτων', 'svc2-desc': 'Προστατεύουμε και αναπτύσσουμε την επένδυσή σας με ολοκληρωμένη διαχείριση ακινήτων.',
+    'svc2-list': ['Επιλογή & εισαγωγή ενοικιαστών','Είσπραξη ενοικίων & λογιστική','Συντονισμός συντήρησης','Διαχείριση βραχυχρόνιων μισθώσεων','Νομική & κανονιστική υποστήριξη'],
+    'svc2-link': 'Διαχείριση ακινήτου',
+    'svc3-name': 'Αγοραπωλησίες', 'svc3-desc': 'Οι αδειοδοτημένοι πράκτορές μας προσφέρουν αποκλειστική πρόσβαση, ειλικρινείς συμβουλές και ομαλές συναλλαγές.',
+    'svc3-list': ['Αποκλειστικές εκτός αγοράς καταχωρήσεις','Εκπροσώπηση αγοραστή','Επενδυτικές συμβουλές','Τίτλοι ιδιοκτησίας & νομική υποστήριξη','Υπηρεσίες διεθνών αγοραστών'],
+    'svc3-link': 'Βρείτε ακίνητο',
+    'about-tag': 'Η Ιστορία Μας', 'about-title': 'Χτισμένο στην <em>Εμπιστοσύνη,</em><br>Ριζωμένο στην Κύπρο',
+    'about-quote': '"Δεν πουλάμε απλώς ακίνητα — βρίσκουμε τον χώρο όπου ξεκινά το επόμενο κεφάλαιο της ζωής σας."',
+    'about-text1': 'Η Aura Estates ιδρύθηκε με αποστολή να φέρει αληθινή τεχνογνωσία, διαφάνεια και κομψότητα στην αγορά ακινήτων της Κύπρου.',
+    'about-text2': 'Από ένα απλό διαμέρισμα στη Λάρνακα έως μια εκτεταμένη θαλασσινή βίλα στη Λεμεσό — κάθε πελάτης λαμβάνει την ίδια αδιάλειπτη δέσμευση για αριστεία.',
+    'testi-tag': 'Κριτικές Πελατών', 'testi-title': 'Λόγια από τους <em>Πελάτες Μας</em>',
+    'contact-tag': 'Επικοινωνία', 'contact-title': 'Βρείτε το <em>Ιδανικό</em> Σας Ακίνητο',
+    'contact-sub': 'Η πολύγλωσση ομάδα μας είναι έτοιμη να σας εξυπηρετήσει στα Αγγλικά, Ελληνικά και Ρωσικά.',
+  },
+  ru: {
+    'hero-tag': 'Элитная недвижимость Кипра',
+    'hero-title': 'Ваше Видение.<br><em>Наш Опыт.</em><br>Кипр.',
+    'hero-sub': 'Премиальное строительство, профессиональное управление недвижимостью и эксклюзивные продажи в лучших локациях Кипра.',
+    'stat1': 'Продано объектов', 'stat2': 'Лет на Кипре', 'stat3': 'Довольных клиентов',
+    'props-tag': 'Избранные объекты', 'props-title': 'Исключительная <em>Недвижимость</em>',
+    'services-tag': 'Наши услуги', 'services-title': 'Три услуги,<br><em>Одно видение</em>',
+    'services-sub': 'От закладки фундамента до передачи ключей — мы самый полный партнёр по недвижимости на Кипре.',
+    'svc1-name': 'Строительство', 'svc1-desc': 'Мы строим исключительные жилые и коммерческие объекты, сочетая архитектурное совершенство с безупречным контролем качества.',
+    'svc1-list': ['Строительство элитных вилл','Жилые комплексы','Коммерческие здания','Полное управление проектом','Реновации и расширения'],
+    'svc1-link': 'Начать проект',
+    'svc2-name': 'Управление недвижимостью', 'svc2-desc': 'Мы защищаем и приумножаем ваши инвестиции с помощью комплексного управления недвижимостью.',
+    'svc2-list': ['Подбор и заселение арендаторов','Сбор арендной платы и учёт','Координация технического обслуживания','Краткосрочная аренда','Юридическое сопровождение'],
+    'svc2-link': 'Управлять объектом',
+    'svc3-name': 'Купля-продажа', 'svc3-desc': 'Наши лицензированные агенты обеспечивают эксклюзивный доступ, честные консультации и безупречные сделки.',
+    'svc3-list': ['Эксклюзивные внерыночные объекты','Представительство покупателя','Инвестиционные консультации','Оформление документов','Услуги для иностранных покупателей'],
+    'svc3-link': 'Найти объект',
+    'about-tag': 'О нас', 'about-title': 'Построено на <em>Доверии,</em><br>Укоренено на Кипре',
+    'about-quote': '"Мы не просто продаём недвижимость — мы находим место, где начнётся ваша следующая глава."',
+    'about-text1': 'Aura Estates была основана с единственной миссией: принести истинную экспертизу, прозрачность и элегантность на рынок недвижимости Кипра.',
+    'about-text2': 'От скромной квартиры в Ларнаке до просторной приморской виллы в Лимассоле — каждый клиент получает одинаковую непоколебимую приверженность качеству.',
+    'testi-tag': 'Отзывы клиентов', 'testi-title': 'Слова наших <em>Клиентов</em>',
+    'contact-tag': 'Связаться с нами', 'contact-title': 'Найдём Ваш <em>Идеальный</em> Объект',
+    'contact-sub': 'Наша многоязычная команда готова помочь вам на английском, греческом и русском языках.',
+  }
+};
+
+function setLang(lang) {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  const d = content[lang];
+  Object.keys(d).forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (Array.isArray(d[id])) {
+      el.innerHTML = d[id].map(i => `<li><span></span>${i}</li>`).join('');
+    } else {
+      el.innerHTML = d[id];
+    }
+  });
+}
+</script>
+</body>
+</html>
